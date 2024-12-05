@@ -1,0 +1,121 @@
+{
+  "flights": [
+    {
+      "id": "1",
+      "airline": "Emirates Airline",
+      "imageSource": "https://c.ekstatic.net/ecl/logos/emirates/emirates-logo-badge.svg?h=d-52wmsnqryhi7L83BAKpg",
+      "departure_time": "2024-12-10T08:00:00",
+      "arrival_time": "2024-12-10T10:30:00",
+      "departure_code": "KHI",
+      "departure_airport": "Karachi",
+      "arrival_airport": "Dubai",
+      "arrival_code": "DXB",
+      "class": "Business",
+      "price": 230
+    },
+    {
+      "id": "2",
+      "airline": "Qatar Airways",
+      "imageSource": "https://www.google.com/imgres?q=qatar%20airline%20logo&imgurl=https%3A%2F%2Fd21buns5ku92am.cloudfront.net%2F69647%2Fimages%2F433143-QR%2520Logo%2520Horizontal%2520White-6a70c4-medium-1654772384.png&imgrefurl=https%3A%2F%2Fwww.qatarairways.com%2Fpress-releases%2Fen-WW%2Fmedia_kits%2F229038%2F&docid=W0UjfQLMJ2pcnM&tbnid=3gvgIs6lUY2gAM&vet=12ahUKEwjc0KCvz5CKAxWRQ_EDHVB9LIcQM3oECBcQAA..i&w=400&h=178&hcb=2&ved=2ahUKEwjc0KCvz5CKAxWRQ_EDHVB9LIcQM3oECBcQAA",
+      "departure_time": "2024-12-11T14:00:00",
+      "arrival_time": "2024-12-11T16:45:00",
+      "departure_code": "KHI",
+      "departure_airport": "Karachi",
+      "arrival_airport": "Doha",
+      "arrival_code": "DOH",
+      "class": "Economy",
+      "price": 150
+    },
+    {
+      "id": "3",
+      "airline": "Turkish Airlines",
+      "imageSource": "https://www.google.com/imgres?q=turkish%20airline%20logo&imgurl=https%3A%2F%2F1000logos.net%2Fwp-content%2Fuploads%2F2020%2F04%2FTurkish-Airlines-symbol.png&imgrefurl=https%3A%2F%2F1000logos.net%2Fturkish-airlines-logo%2F&docid=Ks6etroG9mb5GM&tbnid=fGkGwgdsuxjH3M&vet=12ahUKEwjpgOe9z5CKAxXOVPEDHeKSNscQM3oECFYQAA..i&w=1500&h=1000&hcb=2&ved=2ahUKEwjpgOe9z5CKAxXOVPEDHeKSNscQM3oECFYQAA",
+      "departure_time": "2024-12-12T09:30:00",
+      "arrival_time": "2024-12-12T15:15:00",
+      "departure_code": "IST",
+      "departure_airport": "Istanbul",
+      "arrival_airport": "Dubai",
+      "arrival_code": "DXB",
+      "class": "Business",
+      "price": 320
+    },
+    {
+      "id": "4",
+      "airline": "Singapore Airlines",
+      "imageSource": "https://www.google.com/imgres?q=singapore%20airline%20logo&imgurl=https%3A%2F%2Fi.pinimg.com%2F736x%2Fcb%2F14%2Fa4%2Fcb14a4b97cc5ca03bbfa5a8b8e1bc5c0.jpg&imgrefurl=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Fthe-30-bestlooking-airlines-logos-in-the-world--326933254196051190%2F&docid=oBlz-2cfBlizpM&tbnid=mGFJE32PH-6yEM&vet=12ahUKEwjRjdvNz5CKAxVcX_EDHSEpG1cQM3oECH8QAA..i&w=735&h=705&hcb=2&ved=2ahUKEwjRjdvNz5CKAxVcX_EDHSEpG1cQM3oECH8QAA",
+      "departure_time": "2024-12-13T11:00:00",
+      "arrival_time": "2024-12-13T21:30:00",
+      "departure_code": "SIN",
+      "departure_airport": "Singapore",
+      "arrival_airport": "London Heathrow",
+      "arrival_code": "LHR",
+      "class": "First",
+      "price": 1200
+    },
+    {
+      "id": "5",
+      "airline": "Delta Airlines",
+      "imageSource": "https://www.google.com/imgres?q=delta%20airline%20logo&imgurl=https%3A%2F%2Fwww.lippincott.com%2Fcontent%2Fdam%2Flippincott%2Fcase-study-assets%2Fdelta%2FDelta_03.jpg.lippincott-transform%2Flippincott-orign%2Fimg.webp&imgrefurl=https%3A%2F%2Fwww.lippincott.com%2Fwork%2Fdelta%2F&docid=MKbyTPj3G9wgwM&tbnid=92nJL2b0gLrZCM&vet=12ahUKEwi9mZzXz5CKAxUbR_EDHcbTOIgQM3oECCcQAA..i&w=2880&h=1618&hcb=2&ved=2ahUKEwi9mZzXz5CKAxUbR_EDHcbTOIgQM3oECCcQAA",
+      "departure_time": "2024-12-14T07:15:00",
+      "arrival_time": "2024-12-14T13:45:00",
+      "departure_code": "JFK",
+      "departure_airport": "New York",
+      "arrival_airport": "Los Angeles",
+      "arrival_code": "LAX",
+      "class": "Economy",
+      "price": 220
+    },
+    {
+      "id": "6",
+      "airline": "British Airways",
+      "imageSource": "https://www.google.com/imgres?q=biritish%20airline%20logo&imgurl=https%3A%2F%2F1000logos.net%2Fwp-content%2Fuploads%2F2016%2F10%2FBritish-Airways-logo.jpg&imgrefurl=https%3A%2F%2F1000logos.net%2Fbritish-airways-logo%2F&docid=lSotAbd8n9WRgM&tbnid=3VXzlOGZCXHHKM&vet=12ahUKEwjrg6_pz5CKAxWsQ_EDHY3pLOwQM3oECB0QAA..i&w=5000&h=2000&hcb=2&ved=2ahUKEwjrg6_pz5CKAxWsQ_EDHY3pLOwQM3oECB0QAA",
+      "departure_time": "2024-12-15T17:00:00",
+      "arrival_time": "2024-12-15T23:30:00",
+      "departure_code": "LHR",
+      "departure_airport": "London Heathrow",
+      "arrival_airport": "New York",
+      "arrival_code": "JFK",
+      "class": "Economy",
+      "price": 450
+    },
+    {
+      "id": "7",
+      "airline": "Air France",
+      "imageSource": "https://www.google.com/imgres?q=air%20france%20airline%20logo&imgurl=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F27%2F87%2F7b%2F27877bcbab95edc899c251e48af48fc3.png&imgrefurl=https%3A%2F%2Fin.pinterest.com%2Fpin%2Fair-france-logo--444871269454908072%2F&docid=4ZTxFokNwOtYZM&tbnid=Ac3q09GPCMgzWM&vet=12ahUKEwiRhsP2z5CKAxWrSvEDHfV9AHEQM3oECBcQAA..i&w=768&h=400&hcb=2&ved=2ahUKEwiRhsP2z5CKAxWrSvEDHfV9AHEQM3oECBcQAA",
+      "departure_time": "2024-12-16T19:20:00",
+      "arrival_time": "2024-12-17T05:00:00",
+      "departure_code": "CDG",
+      "departure_airport": "Paris",
+      "arrival_airport": "Tokyo Haneda",
+      "arrival_code": "HND",
+      "class": "Business",
+      "price": 890
+    },
+    {
+      "id": "8",
+      "airline": "Etihad Airways",
+      "imageSource": "https://www.google.com/imgres?q=etihad%20airline%20logo&imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Fc%2Fc5%2FEY-Etihad-Airways-new-logo-En.jpg%2F1200px-EY-Etihad-Airways-new-logo-En.jpg&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFile%3AEY-Etihad-Airways-new-logo-En.jpg&docid=qMUNqATF0dxxdM&tbnid=OG17aTQyz9K55M&vet=12ahUKEwjOqbaL0JCKAxUsSfEDHbEFMtUQM3oECGAQAA..i&w=1200&h=848&hcb=2&ved=2ahUKEwjOqbaL0JCKAxUsSfEDHbEFMtUQM3oECGAQAA",
+      "departure_time": "2024-12-17T06:45:00",
+      "arrival_time": "2024-12-17T08:30:00",
+      "departure_code": "AUH",
+      "departure_airport": "Abu Dhabi",
+      "arrival_airport": "Muscat",
+      "arrival_code": "MCT ",
+      "class": "Economy",
+      "price": 100
+    },
+    {
+      "id": "9",
+      "airline": "Cathay Pacific",
+      "imageSource": "https://www.logo.wine/a/logo/Cathay_Pacific/Cathay_Pacific-Logo.wine.svg",
+      "departure_time": "2024-12-18T13:00:00",
+      "arrival_time": "2024-12-18T23:00:00",
+      "departure_code": "HKG",
+      "departure_airport": "Hong Kong",
+      "arrival_airport": "San Francisco",
+      "arrival_code": "SFO",
+      "class": "First",
+      "price": 1500
+    }
+  ]
+}

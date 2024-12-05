@@ -19,6 +19,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CheckBox } from "react-native-elements";
 import Continue from "@/components/Continue";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
   const [email, setEmail] = useState("");
@@ -67,7 +68,6 @@ export default function HomeScreen() {
                 value={email}
                 onChangeText={handleEmailChange}
                 secureTextEntry={false}
-                imageSource={undefined}
               />
             </View>
 
@@ -78,7 +78,6 @@ export default function HomeScreen() {
                 value={password}
                 onChangeText={handlePasswordChange}
                 secureTextEntry={true}
-                imageSource={undefined}
               />
             </View>
           </View>
@@ -100,14 +99,21 @@ export default function HomeScreen() {
             <Text style={styles.label}>Remember me</Text>
           </View>
 
-          <Pressable style={styles.button}>
+          <Pressable
+            style={styles.button}
+            onPress={() => router.replace("/(tabs)")}
+          >
             <Text style={styles.button_text}>Login</Text>
           </Pressable>
           <Continue>Or Sign up with</Continue>
 
           <MediaIcons />
 
-          <Button title="Create an account" color="#255257" />
+          <Button
+            title="Create an account"
+            color="#255257"
+            onPress={() => router.push("/signup")}
+          />
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

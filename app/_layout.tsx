@@ -30,6 +30,30 @@ export default function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="signup"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="forget-password"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="otp-verification"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="(authenticated)"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

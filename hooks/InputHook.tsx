@@ -18,7 +18,7 @@ type Props = {
   onChangeText: (text: string) => void;
 
   secureTextEntry: boolean;
-  imageSource: any;
+  // imageSource: any;
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
 };
@@ -30,7 +30,7 @@ const InputHook = ({
   onChangeText,
 
   value,
-  imageSource,
+  // imageSource,
   keyboardType,
   autoCapitalize,
 }: Props) => {
@@ -40,7 +40,6 @@ const InputHook = ({
     <View>
       <Text style={styles.label}>{label}</Text>
       <View>
-        {imageSource && <Image source={imageSource} style={styles.image} />}
         <TextInput
           placeholder={placeHolder}
           value={value}
@@ -49,7 +48,7 @@ const InputHook = ({
           onChangeText={onChangeText}
           keyboardType={keyboardType}
           autoCapitalize={autoCapitalize}
-          style={[styles.input, imageSource ? { paddingLeft: 60 } : null]}
+          style={[styles.input]}
         />
         {secureTextEntry && (
           <TouchableOpacity
