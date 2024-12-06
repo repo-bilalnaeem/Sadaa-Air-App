@@ -7,8 +7,9 @@ import {
   TouchableWithoutFeedback,
   Pressable,
   StatusBar,
+  Button,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import InputHook from "@/hooks/InputHook";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -20,6 +21,8 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const { isLoaded, signUp } = useSignUp();
+  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (text: any) => {
     setEmail(text);
@@ -39,27 +42,20 @@ const SignUp = () => {
     Keyboard.dismiss();
   };
 
-  const {
-    signUp,
-    isLoaded: signUpLoaded,
-    setActive: signupSetActive,
-  } = useSignUp();
-  const [loading, setLoading] = useState(false);
-
   const onSignUpPress = async () => {
-    if (!signUpLoaded) {
+    if (!isLoaded) {
       return;
     }
     setLoading(true);
 
     try {
-      const result = await signUp.create({
+      const user = await signUp.create({
+        firstName: name,
         emailAddress: email,
         password,
       });
-
-      signupSetActive({ session: result.createdSessionId });
     } catch (err: any) {
+      console.log(err.errors);
       alert(err.errors[0].message);
     } finally {
       setLoading(false);
@@ -97,6 +93,7 @@ const SignUp = () => {
               secureTextEntry={true}
             />
           </View>
+
           <Text style={styles.sub_text}>
             By continuing, you agree to our{" "}
             <Text
@@ -111,7 +108,7 @@ const SignUp = () => {
             </Text>
           </Text>
 
-          <Pressable style={styles.button} onPress={onSignUpPress}>
+          <Pressable style={styles.button} onPressIn={() => onSignUpPress()}>
             <Text style={styles.button_text}>Sign up</Text>
           </Pressable>
 
