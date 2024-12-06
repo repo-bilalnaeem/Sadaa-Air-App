@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
-  Button,
   Pressable,
   StatusBar,
 } from "react-native";
@@ -15,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Continue from "@/components/Continue";
 import MediaIcons from "@/components/MediaIcons";
+import { useSignUp } from "@clerk/clerk-expo";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -37,6 +37,33 @@ const SignUp = () => {
 
   const handlePress = () => {
     Keyboard.dismiss();
+  };
+
+  const {
+    signUp,
+    isLoaded: signUpLoaded,
+    setActive: signupSetActive,
+  } = useSignUp();
+  const [loading, setLoading] = useState(false);
+
+  const onSignUpPress = async () => {
+    if (!signUpLoaded) {
+      return;
+    }
+    setLoading(true);
+
+    try {
+      const result = await signUp.create({
+        emailAddress: email,
+        password,
+      });
+
+      signupSetActive({ session: result.createdSessionId });
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -84,7 +111,7 @@ const SignUp = () => {
             </Text>
           </Text>
 
-          <Pressable style={styles.button}>
+          <Pressable style={styles.button} onPress={onSignUpPress}>
             <Text style={styles.button_text}>Sign up</Text>
           </Pressable>
 

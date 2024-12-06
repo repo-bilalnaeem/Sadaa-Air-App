@@ -11,11 +11,22 @@ import {
 } from "react-native";
 import flights_data from "@/assets/data/search_flights.json";
 import Svg, { Line } from "react-native-svg";
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 
 const Search = () => {
   const { flights } = flights_data;
   const { width } = useWindowDimensions();
+  const { from_airport, to_airport, date } = useLocalSearchParams<{
+    from_airport?: string;
+    to_airport?: string;
+    date?: string;
+  }>();
+
+  const filter_fligts = flights.filter(
+    (flight) =>
+      flight.departure_airport === from_airport &&
+      flight.arrival_airport === to_airport
+  );
 
   const renderFlightItem = ({ item }: any) => (
     <View style={styles.card}>
@@ -100,7 +111,7 @@ const Search = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <FlatList
-        data={flights}
+        data={filter_fligts}
         keyExtractor={(item) => item.id}
         bounces={false}
         renderItem={renderFlightItem}

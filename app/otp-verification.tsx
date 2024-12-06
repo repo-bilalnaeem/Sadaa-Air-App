@@ -19,18 +19,17 @@ import {
 } from "react-native-confirmation-code-field";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { useSignIn } from "@clerk/clerk-expo";
 
-const CELL_COUNT = 4;
+const CELL_COUNT = 6;
 
 const Verifiaction = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [canResend, setCanResend] = useState(false);
   const [timer, setTimer] = useState(30);
-
-  const handleEmailChange = (text: any) => {
-    setEmail(text);
-  };
+  const { signIn } = useSignIn();
+  const [successfulCreation, setSuccessfulCreation] = useState(false);
 
   const { top } = useSafeAreaInsets();
 
@@ -54,8 +53,21 @@ const Verifiaction = () => {
     return () => clearInterval(intervalId);
   }, [timer]);
 
+  const onRequestReset = async () => {
+    try {
+      await signIn!.create({
+        strategy: "reset_password_email_code",
+        identifier: email,
+      });
+      setSuccessfulCreation(true);
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    }
+  };
+
   const handleResend = async () => {
     try {
+      onRequestReset();
       setCanResend(false);
       setTimer(30);
     } catch (error) {
@@ -75,6 +87,19 @@ const Verifiaction = () => {
     return `${String(minutes).padStart(2, "0")}:${String(
       remainingSeconds
     ).padStart(2, "0")}`;
+  };
+
+  const onReset = async () => {
+    try {
+      const result = await signIn!.attemptFirstFactor({
+        strategy: "reset_password_email_code",
+        code,
+      });
+      // console.log(result);
+      router.push("/reset-password");
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    }
   };
 
   return (
@@ -113,10 +138,7 @@ const Verifiaction = () => {
             />
           </View>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => router.replace("/reset-password")}
-          >
+          <Pressable style={styles.button} onPress={() => onReset()}>
             <Text style={styles.button_text}>Verify</Text>
           </Pressable>
 

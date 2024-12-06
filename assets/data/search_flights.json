@@ -11,7 +11,8 @@
       "arrival_airport": "Dubai",
       "arrival_code": "DXB",
       "class": "Business",
-      "price": 230
+      "price": 230,
+      "departure_date":"2024-12-15"
     },
     {
       "id": "2",
@@ -24,7 +25,9 @@
       "arrival_airport": "Doha",
       "arrival_code": "DOH",
       "class": "Economy",
-      "price": 150
+      "price": 150,
+      "departure_date":"2024-12-16"
+
     },
     {
       "id": "3",
@@ -37,7 +40,9 @@
       "arrival_airport": "Dubai",
       "arrival_code": "DXB",
       "class": "Business",
-      "price": 320
+      "price": 320,
+      "departure_date":"2024-12-17"
+
     },
     {
       "id": "4",
@@ -50,7 +55,9 @@
       "arrival_airport": "London Heathrow",
       "arrival_code": "LHR",
       "class": "First",
-      "price": 1200
+      "price": 1200,
+      "departure_date":"2024-12-18"
+
     },
     {
       "id": "5",
@@ -63,7 +70,9 @@
       "arrival_airport": "Los Angeles",
       "arrival_code": "LAX",
       "class": "Economy",
-      "price": 220
+      "price": 220,
+      "departure_date":"2024-12-19"
+
     },
     {
       "id": "6",
@@ -76,7 +85,8 @@
       "arrival_airport": "New York",
       "arrival_code": "JFK",
       "class": "Economy",
-      "price": 450
+      "price": 450,
+      "departure_date":"2024-12-20"
     },
     {
       "id": "7",
@@ -89,7 +99,8 @@
       "arrival_airport": "Tokyo Haneda",
       "arrival_code": "HND",
       "class": "Business",
-      "price": 890
+      "price": 890,
+      "departure_date":"2024-12-21"
     },
     {
       "id": "8",
@@ -102,7 +113,8 @@
       "arrival_airport": "Muscat",
       "arrival_code": "MCT ",
       "class": "Economy",
-      "price": 100
+      "price": 100,
+      "departure_date":"2024-12-22"
     },
     {
       "id": "9",
@@ -115,7 +127,8 @@
       "arrival_airport": "San Francisco",
       "arrival_code": "SFO",
       "class": "First",
-      "price": 1500
+      "price": 1500,
+      "departure_date":"2024-12-23"
     }
   ]
 }

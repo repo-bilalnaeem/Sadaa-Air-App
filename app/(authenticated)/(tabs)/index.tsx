@@ -11,17 +11,30 @@ import {
   TouchableWithoutFeedback,
   StatusBar,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, router } from "expo-router";
+import { Link, router, useRouter } from "expo-router";
 import SearchHook from "@/hooks/SearchHook";
 import Offers from "@/components/Offers";
+import { useLocalSearchParams, useSearchParams } from "expo-router/build/hooks";
 
 const Home = () => {
   const { top } = useSafeAreaInsets();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [departure, setDeparture] = useState("");
+  const [traveller, setTraveller] = useState("");
+  const [seat, setSeat] = useState("");
+  const { selectedDate } = useLocalSearchParams<{ selectedDate?: string }>();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (selectedDate) {
+      setDeparture(selectedDate); // Update departure date with selected value
+    }
+  }, [selectedDate]);
 
   const handlePress = () => {
     Keyboard.dismiss();
@@ -33,6 +46,18 @@ const Home = () => {
 
   const handleToChange = (text: any) => {
     setTo(text);
+  };
+
+  const handleDepartureChange = (text: any) => {
+    setDeparture(text);
+  };
+
+  const handleTravellerChange = (text: any) => {
+    setTraveller(text);
+  };
+
+  const handleSeatChange = (text: any) => {
+    setSeat(text);
   };
 
   return (
@@ -58,30 +83,49 @@ const Home = () => {
               value={from}
               onChangeText={handleFromChange}
               imageSource={"plane-departure"}
+              autoCapitalize="words"
+              edit={true}
             />
 
             <SearchHook
               label={"To"}
               placeHolder={"Dubai DXB"}
-              value={from}
-              onChangeText={handleFromChange}
+              value={to}
+              onChangeText={handleToChange}
               imageSource={"plane-arrival"}
+              autoCapitalize="words"
+              edit={true}
             />
 
             <View style={{ display: "flex", flexDirection: "row", gap: 16 }}>
-              <SearchHook
-                label={"Departure"}
-                placeHolder={"15/07/2022"}
-                value={from}
-                onChangeText={handleFromChange}
-                imageSource={"calendar-alt"}
-              />
+              <Link
+                href={{
+                  pathname: "/(authenticated)/departure-date",
+                  params: { onDateSelect: "departure" },
+                }}
+                asChild
+                // style={{ flex: 1 }}
+              >
+                <TouchableOpacity style={{ pointerEvents: "box-only" }}>
+                  <SearchHook
+                    label={"Departure"}
+                    placeHolder={"15/07/2022"}
+                    value={departure}
+                    onChangeText={handleDepartureChange}
+                    imageSource={"calendar-alt"}
+                    edit={true}
+                  />
+                </TouchableOpacity>
+              </Link>
               <SearchHook
                 label={"Return"}
                 placeHolder={"Return Date"}
-                value={from}
-                onChangeText={handleFromChange}
+                value={""}
                 imageSource={"plus"}
+                onChangeText={function (text: string): void {
+                  throw new Error("Function not implemented.");
+                }}
+                edit={false}
               />
             </View>
 
@@ -94,22 +138,42 @@ const Home = () => {
               <SearchHook
                 label={"Traveller"}
                 placeHolder={"1 Adult"}
-                value={from}
-                onChangeText={handleFromChange}
+                value={traveller}
+                onChangeText={handleTravellerChange}
                 imageSource={"user"}
+                keyboardType="numeric"
+                edit
               />
               <SearchHook
                 label={"Class"}
                 placeHolder={"Economy"}
-                value={from}
-                onChangeText={handleFromChange}
+                value={seat}
+                onChangeText={handleSeatChange}
                 imageSource={undefined}
+                edit
               />
             </View>
 
             <Pressable
-              style={styles.button}
-              onPress={() => router.push("/search")}
+              style={[
+                styles.button,
+                traveller && to && departure && from && { opacity: 0.7 },
+              ]}
+              disabled={!(traveller && to && departure && from)}
+              onPress={() =>
+                traveller &&
+                to &&
+                departure &&
+                from &&
+                router.push({
+                  pathname: "/(authenticated)/search",
+                  params: {
+                    from_airport: from,
+                    to_airport: to,
+                    date: departure,
+                  },
+                })
+              }
             >
               <Text style={styles.button_text}>Search</Text>
             </Pressable>

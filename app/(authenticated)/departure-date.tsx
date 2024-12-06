@@ -1,31 +1,61 @@
-import React, { useState } from "react";
-import { Calendar } from "react-native-calendars";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import React from "react";
+import { useState } from "react";
+import { View } from "react-native";
+import { CalendarList } from "react-native-calendars";
 
 const DepartureDate = () => {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selected, setSelected] = useState("");
 
-  const handleDateSelect = (day: any) => {
-    setSelectedDate(day.dateString);
+  const handleDayPress = (day: any) => {
+    setSelected(day.dateString);
+
+    router.dismissTo({
+      pathname: "/(authenticated)/(tabs)",
+      params: { selectedDate: day.dateString },
+    });
+
+    // router.dismiss();
   };
+
   return (
-    <SafeAreaView style={{ backgroundColor: "#fff" }}>
-      <Calendar
-        onDayPress={handleDateSelect}
-        theme={{
-          arrowColor: "#0064D2",
-          textDayFontFamily: "monospace",
-          textMonthFontFamily: "monospace",
-          textDayHeaderFontFamily: "monospace",
-          textDayFontWeight: "400",
-          textMonthFontWeight: "600",
-          textDayHeaderFontWeight: "300",
+    <View>
+      <CalendarList
+        initialScrollIndex={200}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+        pastScrollRange={1}
+        futureScrollRange={1}
+        onDayPress={(day) => {
+          // setSelected(day.dateString);
+          handleDayPress(day);
         }}
+        theme={{
+          dayTextColor: "black",
+          selectedDayBackgroundColor: "#365FF1",
+          textDayFontWeight: "500",
+          textDayHeaderFontWeight: "400",
+          selectedDayTextColor: "white",
+          todayTextColor: "white",
+          todayBackgroundColor: "#365FF1",
+          monthTextColor: "#404040",
+          textMonthFontWeight: "400",
+          textDayFontSize: 17,
+          textMonthFontSize: 15,
+        }}
+        onVisibleMonthsChange={(months) => {
+          // console.log("Visible months changed", months);
+        }}
+        monthFormat="MMMM"
         markedDates={{
-          [selectedDate]: { selected: true, color: "#2584e9" },
+          [selected]: {
+            selected: true,
+            disableTouchEvent: true,
+            // selectedDotColor: "orange",
+          },
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

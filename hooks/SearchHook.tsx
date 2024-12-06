@@ -16,7 +16,7 @@ type Props = {
   imageSource: any;
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
-  disable?: any;
+  edit: boolean;
 };
 
 const SearchHook = ({
@@ -27,7 +27,7 @@ const SearchHook = ({
   imageSource,
   keyboardType,
   autoCapitalize,
-  disable,
+  edit,
 }: Props) => {
   return (
     <View style={styles.inputContainer}>
@@ -40,11 +40,13 @@ const SearchHook = ({
           style={styles.image}
         />
         <TextInput
+          editable={edit}
           placeholder={placeHolder}
           value={value}
           onChangeText={onChangeText}
           placeholderTextColor="gray"
           keyboardType={keyboardType}
+          // enablesReturnKeyAutomatically
           autoCapitalize={autoCapitalize}
           style={[
             styles.lightTextInput,
@@ -83,7 +85,9 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "transparent",
     color: "#000",
-    paddingLeft:"15%"
+    paddingLeft: "15%",
+    flexGrow: 1,
+    paddingRight: "4%",
   },
 
   image: {

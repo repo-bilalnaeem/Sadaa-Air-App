@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ProfileHook from "@/hooks/ProfileHook";
 import { router } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
 
 const Profile = () => {
   const { top } = useSafeAreaInsets();
@@ -19,6 +20,7 @@ const Profile = () => {
   const [address, setAddress] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [country, setCountry] = useState("");
+  const { signOut } = useAuth();
 
   const handleNameChange = (text: any) => {
     setName(text);
@@ -38,6 +40,11 @@ const Profile = () => {
 
   const handlePress = () => {
     Keyboard.dismiss();
+  };
+
+  const onSignOut = () => {
+    signOut();
+    router.replace("/signin");
   };
 
   return (
@@ -78,7 +85,25 @@ const Profile = () => {
             <Text style={styles.button_text}>Confirm</Text>
           </Pressable>
 
-          <Button title="Skip" color="#255257" onPress={() => router.back()} />
+          <Pressable
+            // title="Log out"
+            // color="#255257"
+            onPressIn={() => onSignOut()}
+          >
+            <Text
+              style={[
+                styles.button_text,
+                {
+                  color: "#255257",
+                  fontSize: 18,
+                  lineHeight: 32,
+                  fontWeight: "400",
+                },
+              ]}
+            >
+              Log out
+            </Text>
+          </Pressable>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

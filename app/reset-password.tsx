@@ -10,13 +10,16 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { useSignIn } from "@clerk/clerk-expo";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const { signIn } = useSignIn();
 
   const handlePasswordChange = (text: any) => {
     setPassword(text);
@@ -31,6 +34,34 @@ const ResetPassword = () => {
   const handlePress = () => {
     Keyboard.dismiss();
   };
+
+  const onReset = async () => {
+    if (!password || password.trim() === "") {
+      Alert.alert("Password cannot be empty.");
+      return;
+    }
+
+    if (!newPassword || newPassword.trim() === "") {
+      Alert.alert("Confirm Password cannot be empty.");
+      return;
+    }
+
+    if (password !== newPassword) {
+      Alert.alert("Passwords do not match.");
+      return;
+    }
+    try {
+      await signIn!.resetPassword({
+        password,
+      });
+
+      router.push("/(authenticated)/(tabs)");
+    } catch (err: any) {
+      alert(err.errors[0].message);
+      console.log(err.errors);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <TouchableWithoutFeedback onPress={handlePress}>

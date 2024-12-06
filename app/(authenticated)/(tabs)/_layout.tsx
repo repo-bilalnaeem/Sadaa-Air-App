@@ -1,11 +1,11 @@
+import { useAuth } from "@clerk/clerk-expo";
 import { AntDesign, Feather, Ionicons, Octicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { TouchableOpacity, Text } from "react-native";
 
-export default function TabLayout() {
-  const inset = useSafeAreaInsets();
+const Tab = () => {
+
   return (
     <Tabs
       screenOptions={{
@@ -24,6 +24,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Book Flight",
+
           headerTitleStyle: {
             color: "#000",
           },
@@ -65,6 +66,18 @@ export default function TabLayout() {
               <Octicons name="chevron-left" size={24} color="black" />
             </TouchableOpacity>
           ),
+          headerStyle: {
+            height: 100,
+          },
+          // headerRight: () => (
+          //   <TouchableOpacity onPressIn={onSignOutPress} style={{ margin: 16 }}>
+          //     <Text
+          //       style={{ fontWeight: "600", fontSize: 16, color: "#255257" }}
+          //     >
+          //       Log out
+          //     </Text>
+          //   </TouchableOpacity>
+          // ),
           tabBarIcon: ({ size, color }) => (
             <AntDesign name="user" size={size} color={color} />
           ),
@@ -72,4 +85,6 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
+};
+
+export default Tab;

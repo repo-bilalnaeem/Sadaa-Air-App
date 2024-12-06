@@ -13,9 +13,13 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { useSignIn } from "@clerk/clerk-expo";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
+  const [successfulCreation, setSuccessfulCreation] = useState(false);
+
+  const { signIn } = useSignIn();
 
   const handleEmailChange = (text: any) => {
     setEmail(text);
@@ -26,6 +30,21 @@ const ForgetPassword = () => {
   const handlePress = () => {
     Keyboard.dismiss();
   };
+
+  const onRequestReset = async () => {
+    try {
+      const response = await signIn!.create({
+        strategy: "reset_password_email_code",
+        identifier: email,
+      });
+      setSuccessfulCreation(true);
+      console.log(response);
+      router.navigate({ pathname: "/otp-verification", params: { email } });
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <TouchableWithoutFeedback onPress={handlePress}>
@@ -45,10 +64,7 @@ const ForgetPassword = () => {
             />
           </View>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => router.replace("/otp-verification")}
-          >
+          <Pressable style={styles.button} onPress={() => onRequestReset()}>
             <Text style={styles.button_text}>Password Reset</Text>
           </Pressable>
         </View>

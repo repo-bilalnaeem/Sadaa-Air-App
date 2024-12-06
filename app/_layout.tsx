@@ -1,15 +1,46 @@
 import React from "react";
 import { useFonts } from "expo-font";
-import { router, Stack } from "expo-router";
+import { Href, router, Slot, Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import "react-native-reanimated";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Octicons } from "@expo/vector-icons";
+import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import * as SecureStore from "expo-secure-store";
 
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
+const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!CLERK_PUBLISHABLE_KEY) {
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+  );
+}
+
+// Cache the Clerk JWT
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
+
+const InitialLayout = () => {
+  const { isLoaded, isSignedIn } = useAuth();
+  const segmnents = useSegments();
+
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -20,14 +51,26 @@ const RootLayout = () => {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
+  useEffect(() => {
+    if (!isLoaded) return;
+    console.log("User changed: ", isSignedIn);
+    const inAuthGroup = segmnents[0] === "(authenticated)";
+
+    if (isSignedIn && !inAuthGroup) {
+      router.replace("/(tabs)" as Href);
+    } else if (!isSignedIn) {
+      router.replace("/signin");
+    }
+  }, [isSignedIn, isLoaded]);
+
+  if (!loaded || !isLoaded) {
+    return <Slot />;
   }
 
   return (
-    <Stack>
+    <Stack initialRouteName="signin">
       <Stack.Screen
-        name="index"
+        name="signin"
         options={{
           headerShown: false,
         }}
@@ -91,6 +134,19 @@ const RootLayout = () => {
   );
 };
 
+const RootLayoutNav = () => {
+  return (
+    <ClerkProvider
+      tokenCache={tokenCache}
+      publishableKey={CLERK_PUBLISHABLE_KEY!}
+    >
+      <ClerkLoaded>
+        <InitialLayout />
+      </ClerkLoaded>
+    </ClerkProvider>
+  );
+};
+
 const styles = StyleSheet.create({
   back_arrow: {
     width: 42,
@@ -103,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RootLayout;
+export default RootLayoutNav;

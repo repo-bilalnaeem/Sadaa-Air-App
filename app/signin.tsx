@@ -15,11 +15,13 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CheckBox } from "react-native-elements";
 import Continue from "@/components/Continue";
 import { router } from "expo-router";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 
 export default function HomeScreen() {
   const [email, setEmail] = useState("");
@@ -39,10 +41,32 @@ export default function HomeScreen() {
   };
 
   const { top } = useSafeAreaInsets();
+  const { signIn } = useSignIn();
 
   const handlePress = () => {
     Keyboard.dismiss();
   };
+
+  const onSignIn = async () => {
+    try {
+      await signIn!.create({
+        identifier: email,
+        password,
+      });
+      router.replace({
+        pathname: "/(authenticated)/(tabs)",
+        params: { email, signin: "true" },
+      });
+    } catch (error) {
+      console.log("error", JSON.stringify(error, null, 2));
+      if (isClerkAPIResponseError(error)) {
+        if (error.errors[0].code === "form_identifier_not_found") {
+          Alert.alert("Error", error.errors[0].message);
+        }
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <TouchableWithoutFeedback onPress={handlePress}>
@@ -89,10 +113,7 @@ export default function HomeScreen() {
             <Text style={styles.label}>Remember me</Text>
           </View>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => router.replace("/(authenticated)/(tabs)")}
-          >
+          <Pressable style={styles.button} onPress={onSignIn}>
             <Text style={styles.button_text}>Login</Text>
           </Pressable>
 
