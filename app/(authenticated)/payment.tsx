@@ -3,7 +3,7 @@ import React from "react";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import flights_data from "@/assets/data/search_flights.json";
-import Card from "@/components/card";
+import Card from "@/components/Card";
 
 const Payment = () => {
   const { flights } = flights_data;
@@ -38,11 +38,12 @@ const Payment = () => {
           <Text style={styles.amount}>${flight.price}</Text>
         </View>
 
-        <Link href={"/"} asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.button_text}>Confirm</Text>
-          </Pressable>
-        </Link>
+        <Pressable
+          style={styles.button}
+          onPressIn={() => router.push(`/boarding?id=${id}`)}
+        >
+          <Text style={styles.button_text}>Confirm</Text>
+        </Pressable>
 
         <Pressable
           style={styles.button_outline}

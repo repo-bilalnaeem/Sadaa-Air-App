@@ -12,7 +12,7 @@ import Svg, { Line } from "react-native-svg";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import flights_data from "@/assets/data/search_flights.json";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Card from "@/components/card";
+import Card from "@/components/Card";
 
 const FlightDetails = () => {
   const { width } = useWindowDimensions();

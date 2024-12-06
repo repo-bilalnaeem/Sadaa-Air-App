@@ -15,96 +15,96 @@ import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
+import SearchHook from "@/hooks/SearchHook";
+import Offers from "@/components/Offers";
 
 const Home = () => {
   const { top } = useSafeAreaInsets();
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
   const handlePress = () => {
     Keyboard.dismiss();
+  };
+
+  const handleFromChange = (text: any) => {
+    setFrom(text);
+  };
+
+  const handleToChange = (text: any) => {
+    setTo(text);
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" />
       <TouchableWithoutFeedback onPress={handlePress} style={{ flex: 1 }}>
-        <View style={[styles.screen, { paddingTop: top }]}>
-          <View style={styles.flight_options}>
-            <Pressable style={styles.flight_btn_active}>
-              <Text style={{ color: "#fff" }}>One Way</Text>
+        <View style={[styles.screen, { marginTop: top }]}>
+          <View style={styles.options}>
+            <Pressable style={styles.button_active}>
+              <Text style={styles.option_active}>One way</Text>
             </Pressable>
-            <Pressable style={styles.flight_btn_inactive}>
-              <Text style={{ color: "#999" }}>Rounded</Text>
+            <Pressable style={styles.button_inactive}>
+              <Text style={styles.option_inactive}>Round</Text>
             </Pressable>
-            <Pressable style={styles.flight_btn_inactive}>
-              <Text style={{ color: "#999" }}>Multicity</Text>
+            <Pressable style={styles.button_inactive}>
+              <Text style={styles.option_inactive}>Multicity</Text>
             </Pressable>
           </View>
-
           <View style={styles.input}>
-            <View style={{ marginBottom: -16 }}>
-              <Text style={styles.label}>From</Text>
-              <View style={[styles.inputContainer, { marginBottom: 10 }]}>
-                <Image
-                  source={require("@/assets/images/takeoff.png")}
-                  style={styles.icon}
-                />
-                <TextInput placeholder="Karachi KHI" style={styles.inputText} />
-              </View>
-              <Pressable
-                style={{
-                  alignSelf: "flex-end",
-                  marginRight: 4,
-                  borderRadius: 100,
-                  borderWidth: StyleSheet.hairlineWidth,
-                  padding: 3,
-                  borderColor: "#E7E9EA",
-                }}
-              >
-                <Ionicons
-                  name="swap-vertical-outline"
-                  size={20}
-                  color={"#2584e9"}
-                />
-              </Pressable>
-            </View>
-            <View>
-              <Text style={styles.label}>To</Text>
-              <View style={[styles.inputContainer, { marginBottom: 10 }]}>
-                <Image
-                  source={require("@/assets/images/landing.png")}
-                  style={styles.icon}
-                />
-                <TextInput placeholder="Dubai DXB" style={styles.inputText} />
-              </View>
+            <SearchHook
+              label={"From"}
+              placeHolder={"Karachi KHI"}
+              value={from}
+              onChangeText={handleFromChange}
+              imageSource={"plane-departure"}
+            />
+
+            <SearchHook
+              label={"To"}
+              placeHolder={"Dubai DXB"}
+              value={from}
+              onChangeText={handleFromChange}
+              imageSource={"plane-arrival"}
+            />
+
+            <View style={{ display: "flex", flexDirection: "row", gap: 16 }}>
+              <SearchHook
+                label={"Departure"}
+                placeHolder={"15/07/2022"}
+                value={from}
+                onChangeText={handleFromChange}
+                imageSource={"calendar-alt"}
+              />
+              <SearchHook
+                label={"Return"}
+                placeHolder={"Return Date"}
+                value={from}
+                onChangeText={handleFromChange}
+                imageSource={"plus"}
+              />
             </View>
 
-            <View style={{ marginBottom: 16 }}>
-              <Text style={styles.label}>Departure Date</Text>
-              <Link href="/departure-date" asChild>
-                <TouchableOpacity>
-                  <View style={styles.inputContainer}>
-                    <Image
-                      source={require("@/assets/images/calendar.png")}
-                      style={styles.icon}
-                    />
-                    <Text style={styles.inputText}>Select a date</Text>
-                  </View>
-                </TouchableOpacity>
-              </Link>
-            </View>
-
-            <View>
-              <Text style={styles.label}>Travelers</Text>
-              <View style={styles.inputContainer}>
-                <Image
-                  source={require("@/assets/images/person.png")}
-                  style={[styles.icon, { height: 25 }]}
-                />
-                <TextInput
-                  placeholder="1 Adult , 0 child, 0 infant"
-                  style={styles.inputText}
-                />
-              </View>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 16,
+              }}
+            >
+              <SearchHook
+                label={"Traveller"}
+                placeHolder={"1 Adult"}
+                value={from}
+                onChangeText={handleFromChange}
+                imageSource={"user"}
+              />
+              <SearchHook
+                label={"Class"}
+                placeHolder={"Economy"}
+                value={from}
+                onChangeText={handleFromChange}
+                imageSource={undefined}
+              />
             </View>
 
             <Pressable
@@ -116,43 +116,14 @@ const Home = () => {
           </View>
         </View>
       </TouchableWithoutFeedback>
+      <Offers />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
-    // backgroundColor: "#fff",
     marginHorizontal: 16,
-  },
-
-  flight_options: {
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    marginVertical: 25,
-    alignItems: "center",
-    shadowColor: "rgba(56, 18, 18, 0.089)",
-    shadowOpacity: 1,
-    shadowOffset: { width: 0, height: 2 },
-    flexGrow: 0,
-    flexShrink: 1,
-    borderRadius: 32,
-    marginBottom: 18,
-  },
-
-  flight_btn_active: {
-    paddingHorizontal: 16,
-    backgroundColor: "#255257",
-    paddingVertical: 5,
-    borderRadius: 32,
-  },
-  flight_btn_inactive: {
-    paddingHorizontal: 16,
-    paddingVertical: 5,
-    borderRadius: 32,
   },
 
   input: {
@@ -160,49 +131,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     shadowColor: "rgba(89, 27, 27, 0.05)",
     shadowOffset: { width: 5, height: 10 },
-    paddingTop: 8,
-    paddingBlock: 24,
     paddingHorizontal: 16,
-  },
-
-  label: {
-    fontWeight: "600",
-    color: "#414D5A",
-    fontSize: 15,
-    marginBottom: 8,
-  },
-
-  inputContainer: {
-    backgroundColor: "#fefefe",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#E6E8E9",
-    flexDirection: "row",
-    gap: 24,
-    pointerEvents: "box-only",
-  },
-
-  inputText: {
-    color: "#000",
-    fontWeight: "500",
-    fontSize: 15,
-  },
-
-  icon: {
-    tintColor: "rgba(85, 85, 85, 1)",
-    width: 28,
-    height: 20,
-    resizeMode: "contain",
+    paddingVertical: 24,
   },
 
   button: {
     backgroundColor: "#255257",
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderRadius: 8,
-    marginTop: 16,
   },
 
   button_text: {
@@ -212,6 +149,41 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 16,
+  },
+
+  button_active: {
+    backgroundColor: "#255257",
+    borderRadius: 32,
+  },
+
+  option_inactive: {
+    color: "#999",
+    fontSize: 14,
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: 24,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+  },
+
+  option_active: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 14,
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: 24,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+  },
+
+  options: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 4,
+    marginBottom: 20,
+    flexGrow: 0,
   },
 });
 

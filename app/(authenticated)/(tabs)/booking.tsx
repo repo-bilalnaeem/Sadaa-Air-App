@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, SafeAreaView, Pressable } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Card from "@/components/card";
+import Card from "@/components/Card";
 import bookings from "@/assets/data/bookings.json";
 
 const Booking = () => {
@@ -11,8 +11,8 @@ const Booking = () => {
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <View style={[styles.screen]}>
         {bookings.map((data, index) => (
-          <>
-            <Card key={index} flight={data} />
+          <View key={index}>
+            <Card flight={data} />
             <View style={styles.information}>
               <View>
                 <Text style={styles.label}>Flight</Text>
@@ -34,7 +34,7 @@ const Booking = () => {
             <Pressable style={styles.button}>
               <Text style={styles.button_text}>Modify</Text>
             </Pressable>
-          </>
+          </View>
         ))}
       </View>
     </SafeAreaView>

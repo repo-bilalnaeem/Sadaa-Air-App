@@ -14,11 +14,16 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
-const ForgetPassword = () => {
-  const [email, setEmail] = useState("");
+const ResetPassword = () => {
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-  const handleEmailChange = (text: any) => {
-    setEmail(text);
+  const handlePasswordChange = (text: any) => {
+    setPassword(text);
+  };
+
+  const handleNewPasswordChange = (text: any) => {
+    setNewPassword(text);
   };
 
   const { top } = useSafeAreaInsets();
@@ -31,25 +36,32 @@ const ForgetPassword = () => {
       <TouchableWithoutFeedback onPress={handlePress}>
         <View style={[styles.screen, { paddingTop: top }]}>
           <StatusBar barStyle="dark-content" />
-          <Text style={styles.headingPrimary}>Forget Password?</Text>
+          <Text style={styles.headingPrimary}>Reset Password</Text>
           <Text style={styles.headingSecondary}>
-            Enter your email address to get the password reset link
+            Enter your new password twice below to reset a new password
           </Text>
           <View style={styles.inputs}>
             <InputHook
-              label={"Email"}
-              placeHolder={"hello@exmaple.com"}
-              value={email}
-              onChangeText={handleEmailChange}
-              secureTextEntry={false}
+              label={"Enter new password"}
+              placeHolder={"*******"}
+              value={password}
+              onChangeText={handlePasswordChange}
+              secureTextEntry={true}
+            />
+            <InputHook
+              label={"Re-enter new password"}
+              placeHolder={"*******"}
+              value={newPassword}
+              onChangeText={handleNewPasswordChange}
+              secureTextEntry={true}
             />
           </View>
 
           <Pressable
             style={styles.button}
-            onPress={() => router.replace("/otp-verification")}
+            onPress={() => router.replace("/(authenticated)/(tabs)")}
           >
-            <Text style={styles.button_text}>Password Reset</Text>
+            <Text style={styles.button_text}>Reset Password</Text>
           </Pressable>
         </View>
       </TouchableWithoutFeedback>
@@ -177,4 +189,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgetPassword;
+export default ResetPassword;

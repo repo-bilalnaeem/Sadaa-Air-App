@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   Pressable,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 import flights_data from "@/assets/data/search_flights.json";
 import Svg, { Line } from "react-native-svg";
@@ -88,36 +89,29 @@ const Search = () => {
         </Text>
       </View>
 
-      <Link
-        href={`/flight/${item.id}`}
-        style={styles.button}
-        asChild
-      >
-        <Text style={styles.button_text}>Check</Text>
+      <Link href={`/flight/${item.id}`} style={styles.button} asChild>
+        <Pressable>
+          <Text style={styles.button_text}>Check</Text>
+        </Pressable>
       </Link>
     </View>
   );
 
   return (
-    <FlatList
-      data={flights}
-      bounces={false}
-      keyExtractor={(item) => item.id}
-      renderItem={renderFlightItem}
-      contentContainerStyle={styles.screen}
-      showsVerticalScrollIndicator={true}
-      horizontal={false}
-    />
+    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+      <FlatList
+        data={flights}
+        keyExtractor={(item) => item.id}
+        bounces={false}
+        renderItem={renderFlightItem}
+        contentContainerStyle={{ paddingHorizontal: 18 }}
+        showsVerticalScrollIndicator={true}
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 18,
-  },
-
   image_style: {
     width: 43.5,
     height: 29,

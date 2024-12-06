@@ -50,16 +50,6 @@ export default function HomeScreen() {
           <StatusBar barStyle="dark-content" />
           <Text style={styles.headingPrimary}>Login</Text>
           <Text style={styles.headingSecondary}>Welcome back to the app</Text>
-{/* 
-          <View style={styles.options}>
-            <TouchableOpacity>
-              <Text style={styles.option_active}>Email</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.option_inactive}>Phone Number</Text>
-            </TouchableOpacity>
-          </View> */}
-
           <View style={styles.inputs}>
             <View>
               <InputHook
@@ -105,6 +95,11 @@ export default function HomeScreen() {
           >
             <Text style={styles.button_text}>Login</Text>
           </Pressable>
+
+          <Pressable onPress={() => router.push("/forget-password")}>
+            <Text style={styles.forget}>Forget Password?</Text>
+          </Pressable>
+
           <Continue>Or Sign up with</Continue>
 
           <MediaIcons />
@@ -230,5 +225,12 @@ const styles = StyleSheet.create({
 
   checkmark: {
     color: "white",
+  },
+
+  forget: {
+    color: "#255257",
+    textAlign: "center",
+    marginVertical: 5,
+    marginBottom: 24,
   },
 });

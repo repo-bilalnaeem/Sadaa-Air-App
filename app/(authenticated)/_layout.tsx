@@ -52,6 +52,16 @@ const Layout = () => {
           headerShadowVisible: false,
         }}
       />
+
+      <Stack.Screen
+        name="boarding"
+        options={{
+          headerTitle: "Boarding Pass",
+          headerTransparent: true,
+          headerBackButtonDisplayMode: "minimal",
+          headerShadowVisible: false,
+        }}
+      />
     </Stack>
   );
 };
