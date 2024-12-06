@@ -1,0 +1,15 @@
+[
+  {
+    "id": "1",
+    "airline": "Emirates Airline",
+    "imageSource": "https://c.ekstatic.net/ecl/logos/emirates/emirates-logo-badge.svg?h=d-52wmsnqryhi7L83BAKpg",
+    "departure_time": "2024-12-10T08:00:00",
+    "arrival_time": "2024-12-10T10:30:00",
+    "departure_code": "KHI",
+    "departure_airport": "Karachi",
+    "arrival_airport": "Dubai",
+    "arrival_code": "DXB",
+    "class": "Business",
+    "price": 230
+  }
+]

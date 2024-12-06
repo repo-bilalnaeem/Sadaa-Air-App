@@ -50,7 +50,7 @@ export default function HomeScreen() {
           <StatusBar barStyle="dark-content" />
           <Text style={styles.headingPrimary}>Login</Text>
           <Text style={styles.headingSecondary}>Welcome back to the app</Text>
-
+{/* 
           <View style={styles.options}>
             <TouchableOpacity>
               <Text style={styles.option_active}>Email</Text>
@@ -58,7 +58,7 @@ export default function HomeScreen() {
             <TouchableOpacity>
               <Text style={styles.option_inactive}>Phone Number</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           <View style={styles.inputs}>
             <View>
@@ -101,7 +101,7 @@ export default function HomeScreen() {
 
           <Pressable
             style={styles.button}
-            onPress={() => router.replace("/(tabs)")}
+            onPress={() => router.replace("/(authenticated)/(tabs)")}
           >
             <Text style={styles.button_text}>Login</Text>
           </Pressable>

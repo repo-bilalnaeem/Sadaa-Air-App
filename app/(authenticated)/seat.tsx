@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Link, router } from "expo-router";
+import {  router } from "expo-router";
 
 const Seat = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();

@@ -12,20 +12,7 @@ import Svg, { Line } from "react-native-svg";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import flights_data from "@/assets/data/search_flights.json";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-interface flight {
-  id: string;
-  airline: string;
-  imageSource: string;
-  departure_time: string;
-  arrival_time: string;
-  departure_code: string;
-  departure_airport: string;
-  arrival_airport: string;
-  arrival_code: string;
-  class: string;
-  price: number;
-}
+import Card from "@/components/card";
 
 const FlightDetails = () => {
   const { width } = useWindowDimensions();
@@ -46,7 +33,7 @@ const FlightDetails = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <View style={[styles.screen, { paddingTop: top }]}>
-        <View style={styles.card}>
+        {/* <View style={styles.card}>
           <View
             style={{
               display: "flex",
@@ -127,9 +114,23 @@ const FlightDetails = () => {
             </View>
           </View>
 
+        </View> */}
+
+        <Card flight={flight} />
+        <View style={styles.flex_amount}>
+          <Text style={styles.price}>Price</Text>
+          <Text style={styles.amount}>${flight.price}</Text>
+        </View>
+        <View style={styles.action_btn}>
+          <Pressable
+            style={styles.button_outline}
+            onPress={() => router.replace("/")}
+          >
+            <Text style={[styles.button_text, { color: "#000" }]}>Cancel</Text>
+          </Pressable>
           <Link href={`/seat?id=${id}`} asChild>
             <Pressable style={styles.button}>
-              <Text style={styles.button_text}>Check</Text>
+              <Text style={styles.button_text}>Confirm</Text>
             </Pressable>
           </Link>
         </View>
@@ -141,119 +142,13 @@ const FlightDetails = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    // backgroundColor: "#fff",
     marginHorizontal: 16,
-  },
-
-  card: {
-    marginTop: 32,
-    paddingBottom: 32,
-    borderBottomColor: "#cacaca",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  company_time: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  image_style: {
-    width: 43.5,
-    height: 29,
-    resizeMode: "contain",
-  },
-  flight_code: {
-    color: "#191919",
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: 16,
-  },
-
-  departure_code: {
-    backgroundColor: "#fff",
-    zIndex: 20,
-    paddingRight: "12%",
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 5,
-  },
-
-  departure_airport: {
-    color: "#666",
-    textAlign: "left",
-    fontSize: 14,
-    fontWeight: "400",
-    fontStyle: "normal",
-    marginVertical: 12,
-  },
-
-  arrival_code: {
-    backgroundColor: "#fff",
-    zIndex: 20,
-    paddingLeft: "12%",
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 5,
-    textAlign: "right",
-  },
-
-  iconContainer: {
-    alignItems: "center",
-  },
-
-  duration: {
-    color: "#555",
-    textAlign: "right",
-    fontSize: 12,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 16,
-  },
-
-  dottedLine: {
-    position: "absolute",
-    top: 12,
-    height: 1,
   },
 
   container: {
     display: "flex",
-    flexDirection: "row",
     justifyContent: "space-between",
-  },
-
-  right_date_time: {
-    color: "#191919",
-    textAlign: "right",
-    fontSize: 16,
-    fontWeight: "600",
-    lineHeight: 24,
-    marginVertical: 4,
-  },
-  left_date_time: {
-    color: "#191919",
-    textAlign: "left",
-    fontSize: 16,
-    fontWeight: "600",
-    lineHeight: 24,
-    marginVertical: 4,
-  },
-
-  arrival_airport: {
-    color: "#666",
-    textAlign: "right",
-    fontSize: 14,
-    fontWeight: "400",
-    fontStyle: "normal",
-    marginVertical: 14,
-  },
-
-  flight_class: {
-    color: "#555",
-    fontSize: 12,
-    fontWeight: "400",
-    lineHeight: 16,
+    alignItems: "center",
   },
 
   button: {
@@ -261,6 +156,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 8,
+    marginTop: 16,
+    flexGrow: 1,
+  },
+
+  button_outline: {
+    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: "#fff",
+    borderColor: "#255257",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+    flexGrow: 1,
     marginTop: 16,
   },
 
@@ -273,20 +180,36 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 
+  price: {
+    color: "#191919",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: "300",
+    lineHeight: 21.66,
+  },
+
   amount: {
     color: "#191919",
     textAlign: "right",
-    fontSize: 14,
+    fontSize: 22,
     fontWeight: "600",
     lineHeight: 24,
   },
 
-  class_price: {
+  flex_amount: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 12,
-    marginBottom: 4,
+    alignItems: "center",
+    gap: "10%",
+    marginBottom: 20,
+  },
+
+  action_btn: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 16,
+    alignItems: "center",
   },
 });
 

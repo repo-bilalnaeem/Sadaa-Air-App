@@ -34,6 +34,7 @@ export default function RootLayout() {
         name="signup"
         options={{
           headerShown: false,
+          presentation: "formSheet",
         }}
       />
       <Stack.Screen

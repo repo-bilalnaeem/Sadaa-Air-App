@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Button,
   Pressable,
+  StatusBar,
 } from "react-native";
 import React, { useState } from "react";
 import InputHook from "@/hooks/InputHook";
@@ -40,6 +41,7 @@ const SignUp = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+      <StatusBar barStyle={"light-content"} />
       <TouchableWithoutFeedback onPress={handlePress}>
         <View style={[styles.screen, { paddingTop: top }]}>
           <Text style={styles.headingPrimary}>Create an Account</Text>
