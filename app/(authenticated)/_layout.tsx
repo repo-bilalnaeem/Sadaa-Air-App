@@ -1,6 +1,5 @@
 import React from "react";
-import { Feather } from "@expo/vector-icons";
-import { Stack, Tabs } from "expo-router";
+import { Stack } from "expo-router";
 
 const Layout = () => {
   return (
@@ -30,6 +29,25 @@ const Layout = () => {
         name="flight/[id]"
         options={{
           headerTitle: "Flight details",
+          headerBackButtonDisplayMode: "minimal",
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="seat"
+        options={{
+          headerTitle: "Choose Seat",
+          headerTransparent: true,
+          headerBackButtonDisplayMode: "minimal",
+          headerShadowVisible: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="payment"
+        options={{
+          headerTitle: "Payment",
+          headerTransparent: true,
           headerBackButtonDisplayMode: "minimal",
           headerShadowVisible: false,
         }}

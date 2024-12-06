@@ -1,50 +1,37 @@
-import React from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Image,
-  useWindowDimensions,
-  Pressable,
   SafeAreaView,
+  StyleSheet,
+  useWindowDimensions,
+  Image,
+  Pressable,
+  TextInput,
 } from "react-native";
-import Svg, { Line } from "react-native-svg";
+import React from "react";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import flights_data from "@/assets/data/search_flights.json";
+import Svg, { Line } from "react-native-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import flights_data from "@/assets/data/search_flights.json";
 
-interface flight {
-  id: string;
-  airline: string;
-  imageSource: string;
-  departure_time: string;
-  arrival_time: string;
-  departure_code: string;
-  departure_airport: string;
-  arrival_airport: string;
-  arrival_code: string;
-  class: string;
-  price: number;
-}
-
-const FlightDetails = () => {
+const Payment = () => {
+  const { flights } = flights_data;
   const { width } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
-  const { flights } = flights_data;
   const { id } = useLocalSearchParams();
 
   const flight = flights.find((flight) => flight.id === id);
 
   if (!flight) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text>Flight not found.</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={[styles.screen, { paddingTop: top }]}>
         <View style={styles.card}>
           <View
@@ -127,11 +114,62 @@ const FlightDetails = () => {
             </View>
           </View>
 
-          <Link href={`/seat?id=${id}`} asChild>
+          <View style={styles.inputs}>
+            <View style={styles.inputContainer}>
+              <Text style={styles.lightLabelTag}>Date</Text>
+              <View style={styles.passwordContainer}>
+                <Image
+                  source={require("@/assets/images/calendar.png")}
+                  style={styles.image}
+                />
+                <TextInput
+                  value="15/07/2022"
+                  placeholderTextColor="gray"
+                  style={[styles.lightTextInput, styles.lightInputFocus]}
+                />
+              </View>
+            </View>
+            <View style={styles.inputContainer}>
+              <Text style={styles.lightLabelTag}>Seat</Text>
+              <View style={styles.passwordContainer}>
+                <Image
+                  source={require("@/assets/images/calendar.png")}
+                  style={styles.image}
+                />
+                <TextInput
+                  value="2B"
+                  placeholderTextColor="gray"
+                  style={[styles.lightTextInput, styles.lightInputFocus]}
+                />
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: '8%',
+            }}
+          >
+            <Text style={styles.total}>Total</Text>
+            <Text style={styles.amount}>${flight.price}</Text>
+          </View>
+
+          <Link href={"/"} asChild>
             <Pressable style={styles.button}>
-              <Text style={styles.button_text}>Check</Text>
+              <Text style={styles.button_text}>Confirm</Text>
             </Pressable>
           </Link>
+
+          <Pressable
+            style={styles.button_outline}
+            onPressIn={() => router.replace("/")}
+          >
+            <Text style={[styles.button_text, { color: "#000" }]}>Cancel</Text>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -141,33 +179,50 @@ const FlightDetails = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    // backgroundColor: "#fff",
     marginHorizontal: 16,
   },
 
   card: {
     marginTop: 32,
-    paddingBottom: 32,
-    borderBottomColor: "#cacaca",
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingTop: "15%",
+    // borderBottomColor: "#cacaca",
+    borderTopColor: "#cacaca",
+    // borderBottomWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
-  company_time: {
+
+  left_date_time: {
+    color: "#191919",
+    textAlign: "left",
+    fontSize: 16,
+    fontWeight: "600",
+    lineHeight: 24,
+    marginVertical: 4,
+  },
+
+  iconContainer: {
+    alignItems: "center",
+  },
+
+  dottedLine: {
+    position: "absolute",
+    top: 12,
+    height: 1,
+  },
+
+  right_date_time: {
+    color: "#191919",
+    textAlign: "right",
+    fontSize: 16,
+    fontWeight: "600",
+    lineHeight: 24,
+    marginVertical: 4,
+  },
+
+  container: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-  },
-  image_style: {
-    width: 43.5,
-    height: 29,
-    resizeMode: "contain",
-  },
-  flight_code: {
-    color: "#191919",
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: 16,
   },
 
   departure_code: {
@@ -198,48 +253,6 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
 
-  iconContainer: {
-    alignItems: "center",
-  },
-
-  duration: {
-    color: "#555",
-    textAlign: "right",
-    fontSize: 12,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 16,
-  },
-
-  dottedLine: {
-    position: "absolute",
-    top: 12,
-    height: 1,
-  },
-
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-
-  right_date_time: {
-    color: "#191919",
-    textAlign: "right",
-    fontSize: 16,
-    fontWeight: "600",
-    lineHeight: 24,
-    marginVertical: 4,
-  },
-  left_date_time: {
-    color: "#191919",
-    textAlign: "left",
-    fontSize: 16,
-    fontWeight: "600",
-    lineHeight: 24,
-    marginVertical: 4,
-  },
-
   arrival_airport: {
     color: "#666",
     textAlign: "right",
@@ -249,15 +262,18 @@ const styles = StyleSheet.create({
     marginVertical: 14,
   },
 
-  flight_class: {
-    color: "#555",
-    fontSize: 12,
-    fontWeight: "400",
-    lineHeight: 16,
-  },
-
   button: {
     backgroundColor: "#255257",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 16,
+  },
+
+  button_outline: {
+    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: "#fff",
+    borderColor: "#255257",
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 8,
@@ -273,21 +289,72 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 
+  inputContainer: {
+    marginBottom: 20,
+    flexGrow: 1,
+  },
+
+  lightLabelTag: {
+    fontSize: 15,
+    backgroundColor: "#fff",
+    paddingHorizontal: 5,
+    zIndex: 1,
+    position: "absolute",
+    top: -10,
+    left: 20,
+    color: "#555",
+    fontWeight: "300",
+  },
+
+  passwordContainer: {
+    position: "relative",
+  },
+
+  image: {
+    width: 16,
+    height: 16,
+    position: "absolute",
+    top: 17,
+    left: 16,
+    tintColor: "#000",
+  },
+
+  lightTextInput: {
+    borderRadius: 17,
+    borderWidth: 1.5,
+    borderColor: "#CCC",
+    height: 50,
+    paddingHorizontal: 42,
+    backgroundColor: "transparent",
+    color: "#000",
+  },
+  lightInputFocus: {
+    borderColor: "#E6E8E7",
+    borderWidth: 1,
+    fontSize: 14,
+  },
+
+  inputs: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 16,
+    marginVertical: 20,
+  },
+
   amount: {
     color: "#191919",
     textAlign: "right",
-    fontSize: 14,
+    fontSize: 24,
     fontWeight: "600",
     lineHeight: 24,
   },
 
-  class_price: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 12,
-    marginBottom: 4,
+  total: {
+    color: "#555",
+    fontSize: 16,
+    fontWeight: "300",
+    lineHeight: 24,
   },
 });
 
-export default FlightDetails;
+export default Payment;
