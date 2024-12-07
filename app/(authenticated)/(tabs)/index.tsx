@@ -168,7 +168,7 @@ const Home = () => {
                   params: {
                     from_airport: from,
                     to_airport: to,
-                    date: departure,
+                     departure,
                   },
                 })
               }

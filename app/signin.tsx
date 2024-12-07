@@ -16,7 +16,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CheckBox } from "react-native-elements";
 import Continue from "@/components/Continue";
@@ -72,8 +72,14 @@ export default function HomeScreen() {
       <StatusBar style="dark" />
 
       <TouchableWithoutFeedback onPress={handlePress}>
-        <View style={[styles.screen, { paddingTop: top }]}>
-      \
+        <View
+          style={[
+            styles.screen,
+            Platform.OS === "android"
+              ? { paddingTop: top * 3 }
+              : { paddingTop: top },
+          ]}
+        >
           <Text style={styles.headingPrimary}>Login</Text>
           <Text style={styles.headingSecondary}>Welcome back to the app</Text>
           <View style={styles.inputs}>

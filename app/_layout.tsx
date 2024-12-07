@@ -4,7 +4,7 @@ import { Href, router, Slot, Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useLayoutEffect } from "react";
 import "react-native-reanimated";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { StripeProvider } from "@stripe/stripe-react-native";
@@ -97,8 +97,20 @@ const InitialLayout = () => {
       <Stack.Screen
         name="signup"
         options={{
-          headerShown: false,
-          presentation: "formSheet",
+          headerShown: Platform.OS === "android" ? true : false,
+
+          presentation: "modal",
+          headerLeft:
+            Platform.OS === "android"
+              ? () => (
+                  <TouchableOpacity
+                    onPressIn={() => router.back()}
+                    style={styles.back_arrow}
+                  >
+                    <Octicons name="chevron-left" size={24} color="black" />
+                  </TouchableOpacity>
+                )
+              : undefined, // No `headerLeft` for non-Android platforms
         }}
       />
       <Stack.Screen
@@ -181,6 +193,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     display: "flex",
     alignItems: "center",
+    marginRight: 20,
   },
 });
 

@@ -6,9 +6,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Pressable,
-  StatusBar,
-  Button,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import React, { useRef, useState } from "react";
 import InputHook from "@/hooks/InputHook";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -65,7 +64,8 @@ const SignUp = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
-      <StatusBar barStyle={"light-content"} />
+      <StatusBar style="dark" />
+
       <TouchableWithoutFeedback onPress={handlePress}>
         <View style={[styles.screen, { paddingTop: top }]}>
           <Text style={styles.headingPrimary}>Create an Account</Text>

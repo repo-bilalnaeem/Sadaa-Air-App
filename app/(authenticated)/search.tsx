@@ -16,17 +16,26 @@ import { Link, useLocalSearchParams } from "expo-router";
 const Search = () => {
   const { flights } = flights_data;
   const { width } = useWindowDimensions();
-  const { from_airport, to_airport, date } = useLocalSearchParams<{
-    from_airport?: string;
-    to_airport?: string;
-    date?: string;
+  const { from_airport, to_airport, departure } = useLocalSearchParams<{
+    from_airport: string;
+    to_airport: string;
+    departure: string;
   }>();
 
-  const filter_fligts = flights.filter(
+  // Prepare regex patterns for case-insensitive and partial matching
+  const fromAirportRegex = new RegExp(from_airport, "i"); // 'i' makes it case-insensitive
+  const toAirportRegex = new RegExp(to_airport, "i");
+  const departureRegex = new RegExp(departure, "i");
+
+  // Filter flights based on regex matching
+  const filter_flights = flights.filter(
     (flight) =>
-      flight.departure_airport === from_airport &&
-      flight.arrival_airport === to_airport
+      fromAirportRegex.test(flight.departure_airport) &&
+      toAirportRegex.test(flight.arrival_airport) &&
+      departureRegex.test(flight.departure_date)
   );
+
+  console.log("Departure date: ", departure);
 
   const renderFlightItem = ({ item }: any) => (
     <View style={styles.card}>
@@ -108,12 +117,25 @@ const Search = () => {
     </View>
   );
 
-
+  if (filter_flights.length === 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fff",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ textAlign: "center" }}>No filghts Found.</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <FlatList
-        data={flights}
+        data={filter_flights}
         keyExtractor={(item) => item.id}
         bounces={false}
         renderItem={renderFlightItem}

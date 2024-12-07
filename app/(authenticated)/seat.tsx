@@ -7,7 +7,7 @@ import {
   Pressable,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -15,6 +15,60 @@ import { router } from "expo-router";
 const Seat = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
   const insets = useSafeAreaInsets();
+
+  const [seats, setSeats] = useState(
+    Array.from({ length: 28 }, (_, index) => {
+      if ([0, 2, 5, 7, 8, 9, 11, 13, 16, 17, 20, 21, 25].includes(index))
+        return { id: index, status: "reserved" };
+      if (
+        [1, 3, 4, 6, 10, 12, 14, 15, 18, 19, 22, 23, 24, 26, 27, 28].includes(
+          index
+        )
+      )
+        return { id: index, status: "available" };
+      return { id: index, status: "available" };
+    })
+  );
+
+  const handleSeatPress = (seatId: number) => {
+    setSeats((prevSeats) =>
+      prevSeats.map((seat) =>
+        seat.id === seatId
+          ? {
+              ...seat,
+              status: seat.status === "selected" ? "available" : "selected",
+            }
+          : seat
+      )
+    );
+  };
+
+  const renderSeats = (
+    startIndex: number | undefined,
+    endIndex: number | undefined
+  ) => {
+    return (
+      <View>
+        {seats.slice(startIndex, endIndex).map((seat) => (
+          <Pressable
+            key={seat.id}
+            style={[
+              styles.seat,
+              seat.status === "reserved" && { backgroundColor: "#D9D9D9" },
+              seat.status === "available" && {
+                backgroundColor: "#7C7270",
+              },
+              seat.status === "selected" && { backgroundColor: "#4CAF50" },
+            ]}
+            onPress={() => handleSeatPress(seat.id)}
+            disabled={seat.status === "reserved"}
+          >
+            <Text style={styles.seatText}>{seat.id}</Text>
+          </Pressable>
+        ))}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -31,7 +85,7 @@ const Seat = () => {
         </View>
         <View style={styles.option}>
           <View style={styles.emergency} />
-          <Text style={styles.text}>Emergency exit</Text>
+          <Text style={styles.text}>Available</Text>
         </View>
         <View style={styles.option}>
           <View style={styles.reserved} />
@@ -45,31 +99,15 @@ const Seat = () => {
       >
         <View style={styles.gridContainer}>
           <View style={styles.flex_column}>
-            <View style={styles.column}>
-              {Array.from({ length: 7 }).map((_, index) => (
-                <View key={`left-seat-${index}`} style={styles.seat} />
-              ))}
-            </View>
-            <View style={styles.column}>
-              {Array.from({ length: 7 }).map((_, index) => (
-                <View key={`left-seat-${index}`} style={styles.seat} />
-              ))}
-            </View>
+            {renderSeats(0, 7)}
+            {renderSeats(7, 14)}
           </View>
 
           <View style={styles.spacer} />
 
           <View style={styles.flex_column}>
-            <View style={styles.column}>
-              {Array.from({ length: 7 }).map((_, index) => (
-                <View key={`right-seat-${index}`} style={styles.seat} />
-              ))}
-            </View>
-            <View style={styles.column}>
-              {Array.from({ length: 7 }).map((_, index) => (
-                <View key={`right-seat-${index}`} style={styles.seat} />
-              ))}
-            </View>
+            {renderSeats(14, 21)}
+            {renderSeats(21, 28)}
           </View>
         </View>
       </ImageBackground>
@@ -140,7 +178,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: "14%",
+    paddingHorizontal: "17%",
     marginTop: "50%",
   },
 
@@ -150,17 +188,13 @@ const styles = StyleSheet.create({
     gap: 12,
   },
 
-  column: {
-    flexDirection: "column",
-    // justifyContent: "space-between",
-  },
-
   seat: {
     width: 40,
     height: 40,
     backgroundColor: "#CCC",
     marginBottom: 10,
     borderRadius: 5,
+    justifyContent: "center",
   },
   spacer: {
     width: 0,
@@ -182,6 +216,13 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "500",
     lineHeight: 16,
+  },
+
+  seatText: {
+    color: "#ddd",
+    textAlign: "center",
+    fontWeight: "800",
+    fontSize: 15,
   },
 });
 
