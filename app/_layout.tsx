@@ -7,15 +7,28 @@ import "react-native-reanimated";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { StripeProvider } from "@stripe/stripe-react-native";
+import { store } from "@/store";
+import SystemNavigationBar from "react-native-system-navigation-bar";
+
 import * as SecureStore from "expo-secure-store";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
+const STRIPE_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
 if (!CLERK_PUBLISHABLE_KEY) {
   throw new Error(
     "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+  );
+}
+
+if (!STRIPE_PUBLISHABLE_KEY) {
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_STRIPE_PUBLISHABLE_KEY in your .env"
   );
 }
 
@@ -38,6 +51,7 @@ const tokenCache = {
 };
 
 const InitialLayout = () => {
+  SystemNavigationBar.navigationHide();
   const { isLoaded, isSignedIn } = useAuth();
   const segmnents = useSegments();
 
@@ -68,7 +82,12 @@ const InitialLayout = () => {
   }
 
   return (
-    <Stack initialRouteName="signin">
+    <Stack
+      initialRouteName="signin"
+      screenOptions={{
+        headerShadowVisible: false,
+      }}
+    >
       <Stack.Screen
         name="signin"
         options={{
@@ -135,15 +154,21 @@ const InitialLayout = () => {
 };
 
 const RootLayoutNav = () => {
+  SystemNavigationBar.navigationHide();
+
   return (
-    <ClerkProvider
-      tokenCache={tokenCache}
-      publishableKey={CLERK_PUBLISHABLE_KEY!}
-    >
-      <ClerkLoaded>
-        <InitialLayout />
-      </ClerkLoaded>
-    </ClerkProvider>
+    <Provider store={store}>
+      <ClerkProvider
+        tokenCache={tokenCache}
+        publishableKey={CLERK_PUBLISHABLE_KEY!}
+      >
+        <ClerkLoaded>
+          <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY!}>
+            <InitialLayout />
+          </StripeProvider>
+        </ClerkLoaded>
+      </ClerkProvider>
+    </Provider>
   );
 };
 

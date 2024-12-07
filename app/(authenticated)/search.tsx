@@ -108,10 +108,12 @@ const Search = () => {
     </View>
   );
 
+
+
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <FlatList
-        data={filter_fligts}
+        data={flights}
         keyExtractor={(item) => item.id}
         bounces={false}
         renderItem={renderFlightItem}

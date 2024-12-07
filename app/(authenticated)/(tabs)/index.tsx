@@ -3,14 +3,13 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
-  TextInput,
+  Platform,
   Pressable,
   SafeAreaView,
   Keyboard,
   TouchableWithoutFeedback,
-  StatusBar,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -62,9 +61,16 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar style="dark" />
       <TouchableWithoutFeedback onPress={handlePress} style={{ flex: 1 }}>
-        <View style={[styles.screen, { marginTop: top }]}>
+        <View
+          style={[
+            styles.screen,
+            Platform.OS === "android"
+              ? { paddingTop: top * 2.5 }
+              : { marginTop: top },
+          ]}
+        >
           <View style={styles.options}>
             <Pressable style={styles.button_active}>
               <Text style={styles.option_active}>One way</Text>
@@ -155,16 +161,8 @@ const Home = () => {
             </View>
 
             <Pressable
-              style={[
-                styles.button,
-                traveller && to && departure && from && { opacity: 0.7 },
-              ]}
-              disabled={!(traveller && to && departure && from)}
+              style={[styles.button]}
               onPress={() =>
-                traveller &&
-                to &&
-                departure &&
-                from &&
                 router.push({
                   pathname: "/(authenticated)/search",
                   params: {

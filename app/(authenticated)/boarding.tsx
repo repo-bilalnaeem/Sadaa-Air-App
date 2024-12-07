@@ -3,8 +3,7 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  useWindowDimensions,
-  Button,
+  Platform,
   Pressable,
 } from "react-native";
 import React from "react";
@@ -12,11 +11,15 @@ import Card from "@/components/Card";
 import flights_data from "@/assets/data/search_flights.json";
 import { router, useLocalSearchParams } from "expo-router";
 import { Barcode } from "expo-barcode-generator";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Boarding = () => {
   const { flights } = flights_data;
   const { id } = useLocalSearchParams();
   const flight = flights.find((flight) => flight.id === id);
+  const insets = useSafeAreaInsets();
+
+  console.log(id);
 
   if (!flight) {
     return (
@@ -28,7 +31,12 @@ const Boarding = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{ marginHorizontal: 18 }}>
+      <View
+        style={[
+          { marginHorizontal: 18 },
+          Platform.OS === "android" && { paddingTop: insets.top * 2 },
+        ]}
+      >
         <Card flight={flight} />
         <View style={styles.information}>
           <View>
@@ -74,6 +82,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
   },
 
   information: {

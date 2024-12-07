@@ -1,16 +1,71 @@
-import { View, Text, SafeAreaView, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  Alert,
+} from "react-native";
 import React from "react";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import flights_data from "@/assets/data/search_flights.json";
 import Card from "@/components/Card";
+import {
+  PaymentSheet,
+  presentPaymentSheet,
+  useStripe,
+} from "@stripe/stripe-react-native";
+import { useCreatePaymentIntentMutation } from "@/slices/apiSlice";
 
 const Payment = () => {
   const { flights } = flights_data;
   const { top } = useSafeAreaInsets();
   const { id } = useLocalSearchParams();
+  const { initPaymentSheet } = useStripe();
+  const [createPaymentIntent] = useCreatePaymentIntentMutation();
 
   const flight = flights.find((flight) => flight.id === id);
+
+  const onCheckout = async () => {
+    // 1. Create a payment intent
+    const response = await createPaymentIntent({
+      amount: flight!.price * 100 * 1,
+      currency: "usd",
+    });
+
+    if (response.error) {
+      console.log(response.error);
+      Alert.alert("Something went wrong!");
+      return;
+    }
+
+    // 2. Initialize the payment sheet
+    const initResponse = await initPaymentSheet({
+      merchantDisplayName: "Sadaa Air",
+      paymentIntentClientSecret: response.data.clientSecret,
+    });
+
+    if (initResponse.error) {
+      console.log(initResponse.error.message);
+      Alert.alert("Something wnet wring!");
+      return;
+    }
+
+    // 3. Present the Payment Sheet from Stripe
+    const paymentResponse = await presentPaymentSheet();
+    if (paymentResponse.error) {
+      Alert.alert(
+        `Error code: ${paymentResponse.error.code}`,
+        paymentResponse.error.message
+      );
+      return;
+    }
+
+    // 4. If payment ok -> create the order
+    PaymentSheet;
+    router.push(`/boarding?id=${id}`);
+  };
 
   if (!flight) {
     return (
@@ -38,10 +93,7 @@ const Payment = () => {
           <Text style={styles.amount}>${flight.price}</Text>
         </View>
 
-        <Pressable
-          style={styles.button}
-          onPressIn={() => router.push(`/boarding?id=${id}`)}
-        >
+        <Pressable style={styles.button} onPress={() => onCheckout()}>
           <Text style={styles.button_text}>Confirm</Text>
         </Pressable>
 

@@ -2,8 +2,11 @@ import React from "react";
 import { router, Stack } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { Octicons } from "@expo/vector-icons";
+import SystemNavigationBar from "react-native-system-navigation-bar";
 
 const Layout = () => {
+  SystemNavigationBar.navigationHide();
+
   return (
     <Stack>
       <Stack.Screen
@@ -34,7 +37,7 @@ const Layout = () => {
         options={{
           presentation: "formSheet",
           headerShown: false,
-          sheetGrabberVisible: true
+          sheetGrabberVisible: true,
         }}
       />
       <Stack.Screen

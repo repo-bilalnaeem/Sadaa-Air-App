@@ -5,11 +5,12 @@ import {
   StyleSheet,
   ImageBackground,
   Pressable,
+  Platform,
 } from "react-native";
 import React from "react";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {  router } from "expo-router";
+import { router } from "expo-router";
 
 const Seat = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -17,7 +18,13 @@ const Seat = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={[styles.options, { paddingVertical: insets.top / 2 }]}>
+      <View
+        style={[
+          styles.options,
+          Platform.OS === "android" && { paddingTop: insets.top * 3 },
+          { paddingVertical: insets.top / 2 },
+        ]}
+      >
         <View style={styles.option}>
           <View style={styles.select} />
           <Text style={styles.text}>Selected</Text>
@@ -68,7 +75,10 @@ const Seat = () => {
       </ImageBackground>
       <Pressable
         onPressIn={() => router.push(`/payment?id=${id}`)}
-        style={styles.button}
+        style={[
+          styles.button,
+          Platform.OS === "android" && { marginBottom: 40, marginTop: 20 },
+        ]}
       >
         <Text style={styles.button_text}>Confirm</Text>
       </Pressable>

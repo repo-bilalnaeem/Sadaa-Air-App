@@ -11,7 +11,6 @@ import {
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ProfileHook from "@/hooks/ProfileHook";
-import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 
 const Profile = () => {
@@ -44,7 +43,7 @@ const Profile = () => {
 
   const onSignOut = () => {
     signOut();
-    router.replace("/signin");
+    // router.replace("/signin");
   };
 
   return (

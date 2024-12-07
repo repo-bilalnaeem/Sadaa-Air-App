@@ -21,7 +21,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoaded, signUp } = useSignUp();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (text: any) => {
@@ -50,10 +50,11 @@ const SignUp = () => {
 
     try {
       const user = await signUp.create({
-        firstName: name,
         emailAddress: email,
         password,
       });
+      console.log("signup", user);
+      await setActive!({ session: user.createdSessionId });
     } catch (err: any) {
       console.log(err.errors);
       alert(err.errors[0].message);

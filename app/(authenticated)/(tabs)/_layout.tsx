@@ -3,20 +3,22 @@ import { AntDesign, Feather, Ionicons, Octicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
 import React from "react";
 import { TouchableOpacity, Text } from "react-native";
+import SystemNavigationBar from "react-native-system-navigation-bar";
 
 const Tab = () => {
+  SystemNavigationBar.navigationHide();
 
   return (
     <Tabs
       screenOptions={{
         tabBarStyle: {
           backgroundColor: "#255257",
+          height: 80,
         },
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "rgba(124, 131, 129, 1)",
         tabBarItemStyle: {
           paddingTop: 10,
-          paddingBottom: 0,
         },
       }}
     >
@@ -24,7 +26,7 @@ const Tab = () => {
         name="index"
         options={{
           title: "Book Flight",
-
+          headerTitleAlign: "center",
           headerTitleStyle: {
             color: "#000",
           },
@@ -40,6 +42,7 @@ const Tab = () => {
         name="booking"
         options={{
           title: "My Bookings",
+
           tabBarLabel: "Booking",
           headerShadowVisible: false,
           tabBarIcon: ({ size, color }) => (
@@ -52,6 +55,7 @@ const Tab = () => {
         name="profile"
         options={{
           title: "Personal Info",
+
           tabBarLabel: "Profile",
           headerBackButtonDisplayMode: "minimal",
           tabBarStyle: {
@@ -69,15 +73,7 @@ const Tab = () => {
           headerStyle: {
             height: 100,
           },
-          // headerRight: () => (
-          //   <TouchableOpacity onPressIn={onSignOutPress} style={{ margin: 16 }}>
-          //     <Text
-          //       style={{ fontWeight: "600", fontSize: 16, color: "#255257" }}
-          //     >
-          //       Log out
-          //     </Text>
-          //   </TouchableOpacity>
-          // ),
+
           tabBarIcon: ({ size, color }) => (
             <AntDesign name="user" size={size} color={color} />
           ),
