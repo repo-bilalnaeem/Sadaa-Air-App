@@ -75,14 +75,10 @@ const Home = () => {
             <Pressable style={styles.button_active}>
               <Text style={styles.option_active}>One way</Text>
             </Pressable>
-            <Pressable
-            // style={styles.button_inactive}
-            >
+            <Pressable style={styles.button_inactive}>
               <Text style={styles.option_inactive}>Round</Text>
             </Pressable>
-            <Pressable
-            // style={styles.button_inactive}
-            >
+            <Pressable style={styles.button_inactive}>
               <Text style={styles.option_inactive}>Multicity</Text>
             </Pressable>
           </View>
@@ -167,15 +163,12 @@ const Home = () => {
             <Pressable
               style={[styles.button]}
               onPress={() =>
-                from &&
-                to &&
-                departure &&
                 router.push({
                   pathname: "/(authenticated)/search",
                   params: {
                     from_airport: from,
                     to_airport: to,
-                    departure,
+                     departure,
                   },
                 })
               }

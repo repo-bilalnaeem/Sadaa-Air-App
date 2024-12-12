@@ -32,7 +32,6 @@ const Tab = () => {
           },
           headerTransparent: true,
           tabBarLabel: "Home",
-          tabBarHideOnKeyboard: true,
 
           tabBarIcon: ({ size, color }) => (
             <Feather name="home" size={size} color={color} />
