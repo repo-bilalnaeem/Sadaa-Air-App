@@ -3,9 +3,11 @@ import { router, Stack } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import SystemNavigationBar from "react-native-system-navigation-bar";
+import { LogBox } from "react-native";
 
 const Layout = () => {
   SystemNavigationBar.navigationHide();
+  LogBox.ignoreAllLogs(true);
 
   return (
     <Stack>
