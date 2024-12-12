@@ -21,11 +21,9 @@ Additional features:
 <img src="./screenshots/104. Verify  OTP.png" width=30%>
 <img src="./screenshots/105. Forgot Password.png" width=30%>
 <img src="./screenshots/108. Home.png" width=30%>
-<img src="./screenshots/110. Search Result.png" width=30%>
 <img src="./screenshots/111. Flight Details.png" width=30%>
 <img src="./screenshots/112. Seats.png" width=30%>
 <img src="./screenshots/114. Payment.png" width=30%>
 <img src="./screenshots/115. Boarding Pass.png" width=30%>
-<img src="./screenshots/116. My bookings.png" width=30%>
 
 </div>
