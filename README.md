@@ -1,6 +1,7 @@
 # React Native Airline Ticket Booking with Clerk
 
-Sadaa Air App is a React Native application designed to provide an intuitive and seamless user experience. This app leverages the power of Expo for rapid development, [Clerk](https://go.clerk.com/wvMHe8T) for authentication, Redux for state management, and integrates various native and third-party libraries to enhance functionality.
+Sadaa Air App is a React Native Airline Ticket Booking system using [Clerk](https://go.clerk.com/wvMHe8T) for user authentication.
+
 Additional features:
 
 - [Expo Router](https://docs.expo.dev/routing/introduction/) file-based navigation and API Routes
